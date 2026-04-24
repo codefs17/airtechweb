@@ -24,7 +24,7 @@ export default function HeroAirflowCard() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.2 }}
       whileHover={{ scale: 1.02, rotateX: 4, rotateY: -4 }}
-      className="relative mx-auto w-full max-w-[470px] [transform-style:preserve-3d] [perspective:1200px] sm:max-w-[530px] lg:ml-auto lg:translate-x-16"
+      className="relative mx-auto w-full max-w-[470px] [transform-style:preserve-3d] [perspective:1200px] sm:max-w-[530px] lg:ml-auto lg:translate-x-24"
     >
       <motion.svg
         viewBox="0 0 540 390"

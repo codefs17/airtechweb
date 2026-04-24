@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   Camera,
   Factory,
@@ -23,6 +24,31 @@ import BackgroundParticles from "./components/background-particles";
 import HeroAirflowCard from "./components/hero-airflow-card";
 
 export default function Home() {
+  const [showBackLabel, setShowBackLabel] = useState(false);
+
+  useEffect(() => {
+    const updateBackLabelVisibility = () => {
+      const evhaSection = document.getElementById("o-nas");
+      if (!evhaSection) {
+        setShowBackLabel(false);
+        return;
+      }
+
+      const evhaStart = evhaSection.offsetTop - 130;
+      const isPastEvhaStart = window.scrollY >= evhaStart;
+      setShowBackLabel(isPastEvhaStart);
+    };
+
+    updateBackLabelVisibility();
+    window.addEventListener("scroll", updateBackLabelVisibility, { passive: true });
+    window.addEventListener("resize", updateBackLabelVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateBackLabelVisibility);
+      window.removeEventListener("resize", updateBackLabelVisibility);
+    };
+  }, []);
+
   const revealUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
@@ -140,6 +166,38 @@ export default function Home() {
         </div>
       </motion.div>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-blue-200/15 bg-black/70 backdrop-blur-md">
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="absolute left-0 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 translate-x-[30%] items-center justify-center rounded-full border border-blue-300/45 bg-blue-950/35 shadow-[0_0_16px_rgba(90,160,255,0.2)] transition hover:scale-105 hover:border-blue-200/70"
+          aria-label="Zpět na začátek stránky"
+        >
+          <svg viewBox="0 0 220 220" className="h-6 w-6 text-blue-200/95">
+            <circle cx="110" cy="110" r="92" fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="10" />
+            <g fill="currentColor">
+              <path d="M110 110 L98 28 Q108 12 124 26 L142 78 Q132 96 110 110 Z" />
+              <path d="M110 110 L192 98 Q208 108 194 124 L142 142 Q124 132 110 110 Z" />
+              <path d="M110 110 L122 192 Q112 208 96 194 L78 142 Q88 124 110 110 Z" />
+              <path d="M110 110 L28 122 Q12 112 26 96 L78 78 Q96 88 110 110 Z" />
+            </g>
+            <circle cx="110" cy="110" r="26" fill="#eaf3ff" fillOpacity="0.95" />
+            <circle cx="110" cy="110" r="10" fill="#ffffff" />
+          </svg>
+        </button>
+        {showBackLabel ? (
+          <motion.button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            initial={{ opacity: 0, x: -8, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: [1, 1.04, 1] }}
+            exit={{ opacity: 0, x: -8, scale: 0.96 }}
+            transition={{ opacity: { duration: 0.25 }, x: { duration: 0.25 }, scale: { duration: 1.2, repeat: Infinity, ease: "easeInOut" } }}
+            className="absolute left-0 top-1/2 ml-16 -translate-y-1/2 rounded-full border border-blue-300/45 bg-black/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-100 transition hover:scale-105 hover:border-blue-200/70"
+            aria-label="Zpět na začátek stránky"
+          >
+            ZPĚT
+          </motion.button>
+        ) : null}
         <div className="mx-auto flex w-full max-w-6xl items-center justify-end px-4 py-3 sm:px-6">
           <nav className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-200 sm:gap-4 sm:text-xs md:text-sm">
             <a href="#o-nas" onClick={handleSmoothScroll("o-nas")} className="transition hover:text-blue-300">
@@ -243,7 +301,7 @@ export default function Home() {
 
             <div className="mt-6 grid max-w-3xl gap-2.5 sm:grid-cols-3">
               {[
-                { icon: Clock3, text: "Rychlá realizace" },
+                { icon: Clock3, text: "ODPOVĚĎ DO 24 HODIN" },
                 { icon: BadgeCheck, text: "Certifikované postupy" },
                 { icon: MapPinned, text: "Působnost po celé ČR" },
               ].map((point) => (
