@@ -16,7 +16,6 @@ import {
   Clock3,
   AlertTriangle,
   BadgeCheck,
-  Timer,
   CircleCheck,
   type LucideIcon,
 } from "lucide-react";
@@ -123,7 +122,7 @@ export default function Home() {
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="pointer-events-none fixed left-3 top-1/2 z-50 -translate-y-1/2 sm:left-5"
+        className="pointer-events-none fixed left-3 top-1/2 z-50 hidden -translate-y-1/2 sm:left-5 md:block"
         aria-hidden="true"
       >
         <div className="rounded-2xl border border-blue-200/45 bg-[#060d1a]/90 px-3 py-3 shadow-[0_0_24px_rgba(120,175,255,0.28)] backdrop-blur sm:px-4 sm:py-4">
@@ -173,15 +172,15 @@ export default function Home() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
-        className="fixed right-4 top-[58px] z-30 flex flex-col gap-2 sm:right-6 sm:top-[62px]"
+        className="fixed left-2 right-2 top-[58px] z-30 flex flex-col gap-2 sm:left-auto sm:right-6 sm:top-[62px]"
       >
-        <div className="flex w-[min(92vw,520px)] items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:px-4">
+        <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
           <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
           <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
             Zanesené VZT a odtahy výrazně zvyšují riziko požáru i kontrolních sankcí. Jednáme rychle, bezpečně a s jasnou dokumentací.
           </p>
         </div>
-        <div className="flex w-[min(92vw,520px)] items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:px-4">
+        <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
           <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
           <div>
             <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
@@ -196,7 +195,7 @@ export default function Home() {
           </div>
         </div>
       </motion.div>
-      <section className="relative flex min-h-screen items-center px-4 py-16 sm:px-6 sm:py-24">
+      <section className="relative flex min-h-screen items-center px-4 py-16 pt-44 sm:px-6 sm:py-24 sm:pt-36">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(78,130,255,0.24),transparent_34%),radial-gradient(circle_at_80%_8%,rgba(140,190,255,0.14),transparent_30%),linear-gradient(180deg,#04060c_0%,#050913_45%,#070d18_100%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(162,194,255,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(162,194,255,0.25)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:repeating-linear-gradient(120deg,rgba(124,170,255,0.35)_0px,rgba(124,170,255,0.35)_1px,transparent_1px,transparent_26px)]" />
@@ -230,7 +229,7 @@ export default function Home() {
               <motion.span
                 variants={lineVariant}
                 transition={{ duration: 0.45 }}
-                className="block whitespace-nowrap text-[0.72em] text-blue-300 drop-shadow-[0_0_16px_rgba(125,175,255,0.45)]"
+                className="block text-[0.72em] text-blue-300 drop-shadow-[0_0_16px_rgba(125,175,255,0.45)] sm:whitespace-nowrap"
               >
                 BEZ RIZIKA A ZBYTEČNÝCH ODSTÁVEK
               </motion.span>
@@ -637,10 +636,6 @@ export default function Home() {
               Chcete rychlou a spolehlivou nabídku pro váš provoz? Ozvěte se nám
               ještě dnes - navrhneme ideální postup, termín i rozsah realizace.
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-blue-300/55 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-100">
-              <Timer size={16} />
-              Reagujeme do 24 hodin
-            </div>
             <a
               href="tel:+420123456789"
               className="mt-8 inline-flex items-center rounded-2xl border border-blue-300/70 bg-blue-400/10 px-5 py-3 text-2xl font-black text-blue-200 shadow-[0_0_24px_rgba(95,146,255,0.25)] transition hover:scale-[1.02] hover:bg-blue-400/20"
