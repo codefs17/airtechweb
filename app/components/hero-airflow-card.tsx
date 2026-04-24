@@ -1,8 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useSyncExternalStore } from "react";
+
+const finePointerMediaQuery = "(hover: hover) and (pointer: fine)";
+
+function subscribeFinePointer(callback: () => void) {
+  const mq = window.matchMedia(finePointerMediaQuery);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getFinePointerSnapshot() {
+  return window.matchMedia(finePointerMediaQuery).matches;
+}
+
+function getFinePointerServerSnapshot() {
+  return false;
+}
 
 export default function HeroAirflowCard() {
+  const finePointerHover = useSyncExternalStore(
+    subscribeFinePointer,
+    getFinePointerSnapshot,
+    getFinePointerServerSnapshot,
+  );
   const particles = [
     { top: "20%", left: "12%", delay: 0 },
     { top: "34%", left: "84%", delay: 0.35 },
@@ -23,12 +45,14 @@ export default function HeroAirflowCard() {
       initial={{ opacity: 0, y: 26, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.2 }}
-      whileHover={{ scale: 1.02, rotateX: 4, rotateY: -4 }}
-      className="relative mx-auto w-full max-w-[470px] [transform-style:preserve-3d] [perspective:1200px] sm:max-w-[530px] lg:ml-auto lg:translate-x-24"
+      whileHover={
+        finePointerHover ? { scale: 1.02, rotateX: 4, rotateY: -4 } : undefined
+      }
+      className="relative mx-auto w-full max-w-[470px] transform-gpu [transform-style:preserve-3d] [perspective:1200px] sm:max-w-[530px] lg:ml-auto lg:translate-x-24"
     >
       <motion.svg
         viewBox="0 0 540 390"
-        className="pointer-events-none absolute -left-[55%] top-[8%] z-[1] h-[84%] w-[120%] opacity-60"
+        className="pointer-events-none absolute -left-[55%] top-[8%] z-[1] h-[84%] w-[120%] transform-gpu opacity-60 will-change-transform"
         aria-hidden="true"
       >
         <motion.path
@@ -68,7 +92,7 @@ export default function HeroAirflowCard() {
         />
       ))}
 
-      <div className="relative mx-auto flex h-[350px] w-full items-center justify-center sm:h-[390px]">
+      <div className="relative mx-auto flex h-[350px] w-full transform-gpu items-center justify-center sm:h-[390px]">
         {techMarks.map((mark) => (
           <div
             key={`${mark.top}-${mark.left}`}
@@ -79,33 +103,33 @@ export default function HeroAirflowCard() {
           </div>
         ))}
         <motion.div
-          className="absolute h-[295px] w-[295px] rounded-full border border-blue-200/25"
+          className="absolute h-[295px] w-[295px] will-change-transform rounded-full border border-blue-200/25"
           animate={{ rotate: 360 }}
           transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute h-[235px] w-[235px] rounded-full border border-blue-300/30"
+          className="absolute h-[235px] w-[235px] will-change-transform rounded-full border border-blue-300/30"
           animate={{ rotate: -360 }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute h-[178px] w-[178px] rounded-full border border-blue-100/35"
+          className="absolute h-[178px] w-[178px] will-change-transform rounded-full border border-blue-100/35"
           animate={{ rotate: 360 }}
           transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
         />
 
         <motion.div
-          className="absolute h-[324px] w-[324px] rounded-full border border-blue-200/15"
+          className="absolute h-[324px] w-[324px] will-change-transform rounded-full border border-blue-200/15"
           animate={{ rotate: -360, scale: [1, 1.02, 1] }}
           transition={{ rotate: { duration: 32, repeat: Infinity, ease: "linear" }, scale: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
         />
         <motion.div
-          className="absolute h-[360px] w-[360px] rounded-full border border-blue-100/10"
+          className="absolute h-[360px] w-[360px] will-change-transform rounded-full border border-blue-100/10"
           animate={{ rotate: 360, opacity: [0.15, 0.35, 0.15] }}
           transition={{ rotate: { duration: 46, repeat: Infinity, ease: "linear" }, opacity: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
         />
         <motion.div
-          className="absolute h-[108px] w-[108px] rounded-full border border-blue-200/30"
+          className="absolute h-[108px] w-[108px] will-change-transform rounded-full border border-blue-200/30"
           animate={{ scale: [1, 1.16, 1], opacity: [0.28, 0.6, 0.28] }}
           transition={{ duration: 2.7, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -114,7 +138,7 @@ export default function HeroAirflowCard() {
 
         <motion.svg
           viewBox="0 0 220 220"
-          className="relative z-10 h-[255px] w-[255px] drop-shadow-[0_0_38px_rgba(120,180,255,0.7)]"
+          className="relative z-10 h-[255px] w-[255px] transform-gpu will-change-transform drop-shadow-[0_0_38px_rgba(120,180,255,0.7)]"
           animate={{ rotate: 360 }}
           transition={{ duration: 4.6, repeat: Infinity, ease: "linear" }}
           aria-hidden="true"

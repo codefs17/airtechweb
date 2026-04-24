@@ -170,7 +170,7 @@ export default function Home() {
       >
         <div className="rounded-2xl border border-blue-200/45 bg-[#060d1a]/90 px-3 py-3 shadow-[0_0_24px_rgba(120,175,255,0.28)] backdrop-blur sm:px-4 sm:py-4">
           <motion.div
-            className="flex h-14 w-9 items-start justify-center rounded-full border-2 border-blue-200/80 bg-[#050b16] p-1.5 shadow-[0_0_14px_rgba(120,175,255,0.25)]"
+            className="flex h-[64px] w-[41px] items-start justify-center rounded-full border-2 border-blue-200/80 bg-[#050b16] p-1.5 shadow-[0_0_14px_rgba(120,175,255,0.25)]"
             animate={{ y: [0, 4, 0], opacity: [0.85, 1, 0.85], scale: [1, 1.04, 1] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -182,14 +182,14 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.div>
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-blue-200/15 bg-black/70 backdrop-blur-md">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-blue-200/15 bg-black/80 backdrop-blur-sm md:bg-black/70 md:backdrop-blur-md">
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="absolute left-0 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 translate-x-[30%] items-center justify-center rounded-full border border-blue-300/45 bg-blue-950/35 shadow-[0_0_16px_rgba(90,160,255,0.2)] transition hover:scale-105 hover:border-blue-200/70"
+          className="absolute left-0 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 translate-x-[30%] items-center justify-center rounded-full border border-blue-300/45 bg-blue-950/35 shadow-[0_0_16px_rgba(90,160,255,0.2)] transition hover:scale-105 hover:border-blue-200/70"
           aria-label="Zpět na začátek stránky"
         >
-          <svg viewBox="0 0 220 220" className="h-6 w-6 text-blue-200/95">
+          <svg viewBox="0 0 220 220" className="h-8 w-8 rotate-45 text-blue-200/95">
             <circle cx="110" cy="110" r="92" fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="10" />
             <g fill="currentColor">
               <path d="M110 110 L98 28 Q108 12 124 26 L142 78 Q132 96 110 110 Z" />
@@ -209,14 +209,14 @@ export default function Home() {
             animate={{ opacity: 1, x: 0, scale: [1, 1.04, 1] }}
             exit={{ opacity: 0, x: -8, scale: 0.96 }}
             transition={{ opacity: { duration: 0.25 }, x: { duration: 0.25 }, scale: { duration: 1.2, repeat: Infinity, ease: "easeInOut" } }}
-            className="absolute left-0 top-1/2 ml-16 -translate-y-1/2 rounded-full border border-blue-300/45 bg-black/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-100 transition hover:scale-105 hover:border-blue-200/70"
+            className="absolute left-0 top-1/2 ml-20 -translate-y-1/2 rounded-full border border-blue-300/45 bg-black/80 px-5 py-2 text-sm font-bold uppercase tracking-[0.14em] text-blue-100 transition hover:scale-105 hover:border-blue-200/70"
             aria-label="Zpět na začátek stránky"
           >
             ZPĚT
           </motion.button>
         ) : null}
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-end px-4 py-3 sm:px-6">
-          <nav className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-200 sm:gap-4 sm:text-xs md:text-sm">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-end px-5 py-4 sm:px-7">
+          <nav className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.08em] text-zinc-200 sm:gap-5 sm:text-sm md:text-[1rem]">
             <a href="#o-nas" onClick={handleSmoothScroll("o-nas")} className="transition hover:text-blue-300">
               O nás
             </a>
@@ -236,7 +236,7 @@ export default function Home() {
             <a
               href="#kontakt"
               onClick={handleSmoothScroll("kontakt")}
-              className="rounded-full border border-blue-300/55 px-3 py-1 transition hover:bg-blue-300 hover:text-black"
+              className="rounded-full border border-blue-300/55 px-4 py-1.5 transition hover:bg-blue-300 hover:text-black"
             >
               Kontakt
             </a>
@@ -258,7 +258,7 @@ export default function Home() {
             }}
             transition={warningMotionOpen}
             style={{ transformOrigin: "100% 0%" }}
-            className="fixed left-2 right-2 top-[58px] z-30 flex transform-gpu flex-col gap-2 will-change-[transform,opacity] sm:left-auto sm:right-6 sm:top-[62px]"
+            className="fixed left-2 right-2 top-[74px] z-30 flex transform-gpu flex-col gap-2 will-change-[transform,opacity] sm:left-auto sm:right-6 sm:top-[82px]"
           >
             <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
               <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />

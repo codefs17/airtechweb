@@ -28,11 +28,11 @@ export default function BackgroundParticles() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.33 : 2);
 
-    const particleCount = prefersReducedMotion ? 36 : isMobile ? 90 : 150;
-    const maxLinkDistance = isMobile ? 100 : 135;
-    const speedFactor = prefersReducedMotion ? 0.2 : isMobile ? 0.38 : 0.56;
+    const particleCount = prefersReducedMotion ? 36 : 150;
+    const maxLinkDistance = 135;
+    const speedFactor = prefersReducedMotion ? 0.2 : 0.56;
     const pulseStrength = prefersReducedMotion ? 0.12 : 0.26;
     const worldHeightMultiplier = 1;
 
@@ -128,12 +128,10 @@ export default function BackgroundParticles() {
 
         const pulse = 1 + Math.sin(time * p.pulseSpeed * 60 + p.pulseOffset) * pulseStrength;
         const alpha = Math.min(1, p.baseOpacity * pulse);
-        const glowSize = p.size * 4.8;
-
-        // Outer soft glow
+        const glowSize = p.size * (isMobile ? 3.6 : 4.8);
         context.beginPath();
         context.arc(p.x, screenY, glowSize, 0, Math.PI * 2);
-        context.fillStyle = `rgba(100, 160, 255, ${alpha * 0.08})`;
+        context.fillStyle = `rgba(100, 160, 255, ${alpha * (isMobile ? 0.065 : 0.08)})`;
         context.fill();
 
         // Core particle
@@ -145,23 +143,46 @@ export default function BackgroundParticles() {
         visibleParticles.push({ x: p.x, screenY, alpha });
       }
 
+      const cellSize = maxLinkDistance;
+      const grid = new Map<string, number[]>();
       for (let i = 0; i < visibleParticles.length; i += 1) {
-        for (let j = i + 1; j < visibleParticles.length; j += 1) {
-          const dx = visibleParticles[i].x - visibleParticles[j].x;
-          const dy = visibleParticles[i].screenY - visibleParticles[j].screenY;
-          const distance = Math.hypot(dx, dy);
+        const p = visibleParticles[i];
+        const cx = Math.floor(p.x / cellSize);
+        const cy = Math.floor(p.screenY / cellSize);
+        const key = `${cx},${cy}`;
+        let bucket = grid.get(key);
+        if (!bucket) {
+          bucket = [];
+          grid.set(key, bucket);
+        }
+        bucket.push(i);
+      }
 
-          if (distance < maxLinkDistance) {
-            const alpha =
-              (1 - distance / maxLinkDistance) *
-              0.22 *
-              Math.min(visibleParticles[i].alpha, visibleParticles[j].alpha);
-            context.beginPath();
-            context.moveTo(visibleParticles[i].x, visibleParticles[i].screenY);
-            context.lineTo(visibleParticles[j].x, visibleParticles[j].screenY);
-            context.strokeStyle = `rgba(110, 170, 255, ${alpha})`;
-            context.lineWidth = 0.45;
-            context.stroke();
+      for (let i = 0; i < visibleParticles.length; i += 1) {
+        const pi = visibleParticles[i];
+        const cx = Math.floor(pi.x / cellSize);
+        const cy = Math.floor(pi.screenY / cellSize);
+        for (let ox = -1; ox <= 1; ox += 1) {
+          for (let oy = -1; oy <= 1; oy += 1) {
+            const bucket = grid.get(`${cx + ox},${cy + oy}`);
+            if (!bucket) continue;
+            for (let b = 0; b < bucket.length; b += 1) {
+              const j = bucket[b];
+              if (j <= i) continue;
+              const pj = visibleParticles[j];
+              const dx = pi.x - pj.x;
+              const dy = pi.screenY - pj.screenY;
+              const distance = Math.hypot(dx, dy);
+              if (distance >= maxLinkDistance) continue;
+              const lineAlpha =
+                (1 - distance / maxLinkDistance) * 0.22 * Math.min(pi.alpha, pj.alpha);
+              context.beginPath();
+              context.moveTo(pi.x, pi.screenY);
+              context.lineTo(pj.x, pj.screenY);
+              context.strokeStyle = `rgba(110, 170, 255, ${lineAlpha})`;
+              context.lineWidth = 0.45;
+              context.stroke();
+            }
           }
         }
       }
@@ -184,7 +205,7 @@ export default function BackgroundParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-[0.95]"
+      className="pointer-events-none fixed inset-0 z-0 transform-gpu opacity-[0.95]"
       aria-hidden="true"
     />
   );
