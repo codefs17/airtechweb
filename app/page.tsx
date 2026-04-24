@@ -173,13 +173,27 @@ export default function Home() {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.2 }}
-        className="fixed right-4 top-[58px] z-30 sm:right-6 sm:top-[62px]"
+        className="fixed right-4 top-[58px] z-30 flex flex-col gap-2 sm:right-6 sm:top-[62px]"
       >
         <div className="flex w-[min(92vw,520px)] items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:px-4">
           <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
           <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
             Zanesené VZT a odtahy výrazně zvyšují riziko požáru i kontrolních sankcí. Jednáme rychle, bezpečně a s jasnou dokumentací.
           </p>
+        </div>
+        <div className="flex w-[min(92vw,520px)] items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:px-4">
+          <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
+          <div>
+            <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
+              Od roku 2026 se zpřísňují normy na hygienu a požární bezpečnost
+            </p>
+            <p className="mt-1 text-xs leading-snug text-zinc-200 sm:text-sm">
+              Vyhláška č. 467/2025 Sb. a nové požadavky na kontrolu provozů zvyšují odpovědnost za stav vzduchotechniky
+            </p>
+            <p className="mt-1 text-xs font-semibold leading-snug text-red-200 sm:text-sm">
+              Zanesené VZT = vyšší riziko požáru, pokut nebo uzavření provozu.
+            </p>
+          </div>
         </div>
       </motion.div>
       <section className="relative flex min-h-screen items-center px-4 py-16 sm:px-6 sm:py-24">
