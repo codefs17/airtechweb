@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   Camera,
@@ -18,6 +18,7 @@ import {
   AlertTriangle,
   BadgeCheck,
   CircleCheck,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
 import BackgroundParticles from "./components/background-particles";
@@ -25,6 +26,7 @@ import HeroAirflowCard from "./components/hero-airflow-card";
 
 export default function Home() {
   const [showBackLabel, setShowBackLabel] = useState(false);
+  const [showWarningBoxes, setShowWarningBoxes] = useState(false);
 
   useEffect(() => {
     const updateBackLabelVisibility = () => {
@@ -141,6 +143,21 @@ export default function Home() {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     };
 
+  const warningEaseOpen = [0.03, 0.92, 0.05, 1] as const;
+  const warningEaseClose = [0.55, 0, 0.45, 1] as const;
+  const warningMotionOpen = {
+    opacity: { duration: 0.62, ease: warningEaseOpen },
+    x: { duration: 1.22, ease: warningEaseOpen },
+    y: { duration: 1.22, ease: warningEaseOpen },
+    scale: { duration: 1.22, ease: warningEaseOpen },
+  } as const;
+  const warningMotionClose = {
+    opacity: { duration: 0.52, ease: warningEaseClose },
+    x: { duration: 1.02, ease: warningEaseClose },
+    y: { duration: 1.02, ease: warningEaseClose },
+    scale: { duration: 1.02, ease: warningEaseClose },
+  } as const;
+
   return (
     <main className="relative overflow-hidden bg-black pb-28 text-white sm:pb-32 md:pb-24">
       <BackgroundParticles />
@@ -226,33 +243,46 @@ export default function Home() {
           </nav>
         </div>
       </header>
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.2 }}
-        className="fixed left-2 right-2 top-[58px] z-30 flex flex-col gap-2 sm:left-auto sm:right-6 sm:top-[62px]"
-      >
-        <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
-          <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
-          <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
-            Zanesené VZT a odtahy výrazně zvyšují riziko požáru i kontrolních sankcí. Jednáme rychle, bezpečně a s jasnou dokumentací.
-          </p>
-        </div>
-        <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
-          <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
-          <div>
-            <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
-              Od roku 2026 se zpřísňují normy na hygienu a požární bezpečnost
-            </p>
-            <p className="mt-1 text-xs leading-snug text-zinc-200 sm:text-sm">
-              Vyhláška č. 467/2025 Sb. a nové požadavky na kontrolu provozů zvyšují odpovědnost za stav vzduchotechniky
-            </p>
-            <p className="mt-1 text-xs font-semibold leading-snug text-red-200 sm:text-sm">
-              Zanesené VZT = vyšší riziko požáru, pokut nebo uzavření provozu.
-            </p>
-          </div>
-        </div>
-      </motion.div>
+      <AnimatePresence>
+        {showWarningBoxes ? (
+          <motion.div
+            key="warning-popover"
+            initial={{ opacity: 0, x: 64, y: 210, scale: 0.935 }}
+            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+            exit={{
+              opacity: 0,
+              x: 64,
+              y: 210,
+              scale: 0.935,
+              transition: warningMotionClose,
+            }}
+            transition={warningMotionOpen}
+            style={{ transformOrigin: "100% 0%" }}
+            className="fixed left-2 right-2 top-[58px] z-30 flex transform-gpu flex-col gap-2 will-change-[transform,opacity] sm:left-auto sm:right-6 sm:top-[62px]"
+          >
+            <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
+              <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
+                Zanesené VZT a odtahy výrazně zvyšují riziko požáru i kontrolních sankcí. Jednáme rychle, bezpečně a s jasnou dokumentací.
+              </p>
+            </div>
+            <div className="flex w-full items-start gap-2.5 rounded-xl border border-red-300/45 bg-gradient-to-r from-red-950/45 to-black/85 px-3.5 py-2.5 shadow-[0_0_20px_rgba(248,113,113,0.18)] sm:w-[520px] sm:px-4">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-300" />
+              <div>
+                <p className="text-xs font-semibold leading-snug text-zinc-100 sm:text-sm">
+                  Od roku 2026 se zpřísňují normy na hygienu a požární bezpečnost
+                </p>
+                <p className="mt-1 text-xs leading-snug text-zinc-200 sm:text-sm">
+                  Vyhláška č. 467/2025 Sb. a nové požadavky na kontrolu provozů zvyšují odpovědnost za stav vzduchotechniky
+                </p>
+                <p className="mt-1 text-xs font-semibold leading-snug text-red-200 sm:text-sm">
+                  Zanesené VZT = vyšší riziko požáru, pokut nebo uzavření provozu.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <section className="relative flex min-h-screen items-center px-4 py-16 pt-44 sm:px-6 sm:py-24 sm:pt-36">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(78,130,255,0.24),transparent_34%),radial-gradient(circle_at_80%_8%,rgba(140,190,255,0.14),transparent_30%),linear-gradient(180deg,#04060c_0%,#050913_45%,#070d18_100%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(162,194,255,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(162,194,255,0.25)_1px,transparent_1px)] [background-size:38px_38px]" />
@@ -759,6 +789,33 @@ export default function Home() {
           </motion.form>
         </div>
       </section>
+
+      <motion.button
+        type="button"
+        onClick={() => setShowWarningBoxes((prev) => !prev)}
+        animate={{
+          borderColor: ["rgba(252,165,165,0.5)", "rgba(239,68,68,0.95)", "rgba(252,165,165,0.5)"],
+          boxShadow: [
+            "0 0 0px rgba(239,68,68,0.3)",
+            "0 0 28px rgba(239,68,68,0.65)",
+            "0 0 0px rgba(239,68,68,0.3)",
+          ],
+          scale: [1, 1.045, 1],
+        }}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+        className="group fixed bottom-[3.8rem] right-3 z-50 flex items-center gap-2 rounded-xl border bg-[#091328]/95 px-2.5 py-2 text-left transition hover:scale-[1.03] sm:bottom-[4.9rem] sm:right-5"
+        aria-label="Zobrazit upozornění"
+      >
+        <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-blue-300/35 bg-blue-950/55 text-blue-100">
+          <UserRound size={16} />
+        </span>
+        <span className="hidden text-[10px] font-bold uppercase tracking-[0.12em] text-blue-100 sm:inline">
+          Upozornění
+        </span>
+        <span className="absolute -right-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full border border-red-200/60 bg-red-500 px-1 text-[10px] font-black text-white">
+          2
+        </span>
+      </motion.button>
 
       <a
         href="tel:+420123456789"
