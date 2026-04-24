@@ -1,0 +1,589 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  Camera,
+  Factory,
+  Fan,
+  RefreshCw,
+  Settings,
+  ShieldCheck,
+  Flame,
+  Store,
+  Building2,
+  type LucideIcon,
+} from "lucide-react";
+import BackgroundParticles from "./components/background-particles";
+import HeroAirflowCard from "./components/hero-airflow-card";
+
+export default function Home() {
+  const revealUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
+  };
+  const heroStagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.14,
+        delayChildren: 0.2,
+      },
+    },
+  };
+  const lineVariant = {
+    hidden: { opacity: 0, y: 26 },
+    visible: { opacity: 1, y: 0 },
+  };
+  const services: Array<{ title: string; icon: LucideIcon }> = [
+    { title: "Komplexní čištění vzduchotechniky", icon: Fan },
+    { title: "Odmaštění a sanitace odtahů", icon: Flame },
+    { title: "Kontrola a servis rozvodů", icon: Settings },
+    { title: "Průmyslová inspekce kamerou", icon: Camera },
+    { title: "Dezinfekce systémů HVAC", icon: ShieldCheck },
+    { title: "Pravidelná údržba provozů", icon: RefreshCw },
+  ];
+
+  const benefits = [
+    "Certifikované postupy a protokoly",
+    "Měřitelné výsledky před/po zásahu",
+    "Minimální odstávky provozu",
+    "Technologie nové generace",
+  ];
+
+  const references = [
+    {
+      name: "Marek K., provozní ředitel",
+      company: "Gastro Hub Brno",
+      quote:
+        "Air Tech nám během jednoho zásahu stabilizoval tah i hygienu. Profesionální, čisté a přesné provedení.",
+    },
+    {
+      name: "Lucie V., facility manager",
+      company: "Business Park Delta",
+      quote:
+        "Jasná komunikace, přehledný report, výsledek okamžitě viditelný. Přesně takového partnera jsme hledali.",
+    },
+    {
+      name: "Petr J., majitel",
+      company: "Hotel Aurora",
+      quote:
+        "Realizace proběhla bez omezení hostů a kvalita vzduchu je po zásahu výrazně lepší.",
+    },
+  ];
+
+  const handleSmoothScroll =
+    (targetId: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      const section = document.getElementById(targetId);
+      if (!section) return;
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+  return (
+    <main className="relative overflow-hidden bg-black pb-24 text-white sm:pb-28 md:pb-0">
+      <BackgroundParticles />
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="pointer-events-none fixed left-3 top-1/2 z-50 -translate-y-1/2 sm:left-5"
+        aria-hidden="true"
+      >
+        <div className="rounded-2xl border border-blue-200/45 bg-[#060d1a]/90 px-3 py-3 shadow-[0_0_24px_rgba(120,175,255,0.28)] backdrop-blur sm:px-4 sm:py-4">
+          <motion.div
+            className="flex h-14 w-9 items-start justify-center rounded-full border-2 border-blue-200/80 bg-[#050b16] p-1.5 shadow-[0_0_14px_rgba(120,175,255,0.25)]"
+            animate={{ y: [0, 4, 0], opacity: [0.85, 1, 0.85], scale: [1, 1.04, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.span
+              className="mt-0.5 h-3.5 w-1.5 rounded-full bg-blue-200"
+              animate={{ y: [0, 11, 0], opacity: [1, 0.25, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
+        </div>
+      </motion.div>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-blue-200/15 bg-black/70 backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-end px-4 py-3 sm:px-6">
+          <nav className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-200 sm:gap-4 sm:text-xs md:text-sm">
+            <a href="#o-nas" onClick={handleSmoothScroll("o-nas")} className="transition hover:text-blue-300">
+              O nás
+            </a>
+            <a href="#sluzby" onClick={handleSmoothScroll("sluzby")} className="transition hover:text-blue-300">
+              Služby
+            </a>
+            <a
+              href="#realizace"
+              onClick={handleSmoothScroll("realizace")}
+              className="hidden transition hover:text-blue-300 sm:inline"
+            >
+              Realizace
+            </a>
+            <a href="#cenik" onClick={handleSmoothScroll("cenik")} className="hidden transition hover:text-blue-300 sm:inline">
+              Ceník
+            </a>
+            <a
+              href="#kontakt"
+              onClick={handleSmoothScroll("kontakt")}
+              className="rounded-full border border-blue-300/55 px-3 py-1 transition hover:bg-blue-300 hover:text-black"
+            >
+              Kontakt
+            </a>
+          </nav>
+        </div>
+      </header>
+      <section className="relative flex min-h-screen items-center px-4 py-16 sm:px-6 sm:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(78,130,255,0.24),transparent_34%),radial-gradient(circle_at_80%_8%,rgba(140,190,255,0.14),transparent_30%),linear-gradient(180deg,#04060c_0%,#050913_45%,#070d18_100%)]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(162,194,255,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(162,194,255,0.25)_1px,transparent_1px)] [background-size:38px_38px]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:repeating-linear-gradient(120deg,rgba(124,170,255,0.35)_0px,rgba(124,170,255,0.35)_1px,transparent_1px,transparent_26px)]" />
+        <motion.div
+          className="pointer-events-none absolute -left-20 top-1/3 h-56 w-56 rounded-full bg-blue-400/20 blur-3xl"
+          animate={{ y: [-30, 20, -30], x: [0, 30, 0], scale: [1, 1.15, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="pointer-events-none absolute -right-24 top-20 h-72 w-72 rounded-full bg-blue-300/15 blur-3xl"
+          animate={{ y: [20, -25, 20], x: [0, -25, 0], scale: [1.1, 1, 1.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75 }}
+          className="relative z-10 mx-auto mt-12 grid w-full max-w-7xl items-center gap-10 sm:mt-16 lg:grid-cols-[1.12fr_0.88fr]"
+        >
+          <div className="max-w-5xl">
+            <motion.h1
+              variants={heroStagger}
+              initial="hidden"
+              animate="visible"
+              className="mt-10 text-[2.15rem] font-black uppercase leading-[0.93] tracking-tight text-white sm:mt-14 sm:text-6xl md:text-[5.4rem]"
+            >
+              <motion.span variants={lineVariant} transition={{ duration: 0.45 }} className="block">
+                ČIŠTĚNÍ VZDUCHOTECHNIKY
+              </motion.span>
+              <motion.span
+                variants={lineVariant}
+                transition={{ duration: 0.45 }}
+                className="block whitespace-nowrap text-[0.72em] text-blue-300 drop-shadow-[0_0_16px_rgba(125,175,255,0.45)]"
+              >
+                PRO FIRMY A PROVOZY
+              </motion.span>
+            </motion.h1>
+
+            <p className="mt-6 max-w-4xl text-base text-zinc-300 sm:text-lg md:text-xl md:leading-[1.4]">
+              Profesionální čištění VZT potrubí, gastro odtahů a
+              vzduchotechnických systémů pro restaurace, firmy a komerční
+              provozy po celé ČR.
+            </p>
+
+            <div className="mt-9 flex max-w-lg flex-col gap-3 sm:mt-11 sm:max-w-none sm:flex-row sm:gap-5">
+              <a
+                href="#kontakt"
+                onClick={handleSmoothScroll("kontakt")}
+                className="neon-button w-full rounded-full bg-gradient-to-r from-blue-300 to-blue-500 px-7 py-4 text-center text-lg font-extrabold text-black shadow-[0_0_24px_rgba(85,150,255,0.38)] transition hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(85,150,255,0.55)] sm:w-auto sm:px-10 sm:py-4.5"
+              >
+                Nezávazná poptávka
+              </a>
+              <a
+                href="#realizace"
+                onClick={handleSmoothScroll("realizace")}
+                className="neon-button w-full rounded-full border border-blue-300/70 px-7 py-4 text-center text-lg font-extrabold text-blue-300 transition hover:bg-blue-300 hover:text-black sm:w-auto sm:px-10 sm:py-4.5"
+              >
+                Zobrazit realizace
+              </a>
+            </div>
+          </div>
+          <HeroAirflowCard />
+        </motion.div>
+
+      </section>
+
+      <section id="o-nas" className="relative z-10 px-4 pb-8 pt-8 sm:px-6 sm:pb-14 sm:pt-12">
+        <div className="mx-auto max-w-6xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            className="mb-4 text-2xl font-black uppercase text-blue-300 sm:mb-6 sm:text-3xl"
+          >
+            O nás a evropské standardy kvality
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="rounded-[1.6rem] border border-blue-300/40 bg-gradient-to-b from-blue-950/35 to-black/65 p-6 shadow-[0_0_35px_rgba(90,150,255,0.2)] backdrop-blur sm:p-8"
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/55 bg-blue-500/15 px-4 py-2 text-blue-100 shadow-[0_0_16px_rgba(100,165,255,0.35)]">
+                <ShieldCheck size={18} strokeWidth={2} />
+                <span className="text-lg font-black uppercase tracking-[0.16em] sm:text-xl">
+                  EVHA
+                </span>
+              </div>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-200">
+                evropské doporučení
+              </p>
+            </div>
+            <h3 className="mt-3 text-2xl font-black uppercase text-white sm:text-3xl">
+              Certifikované postupy a profesionální přístup
+            </h3>
+            <p className="mt-4 max-w-4xl text-zinc-300">
+              Pracujeme podle profesionálních hygienických postupů pro
+              vzduchotechniku a kuchyňské odtahy s důrazem na evropské standardy
+              oboru (včetně doporučení EVHA - European Ventilation Hygiene
+              Association). Každou realizaci řešíme systematicky: inspekce,
+              čištění, kontrola výsledku a dokumentace před/po.
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-xl border border-zinc-700 bg-zinc-900/70 p-3 text-sm text-zinc-200">
+                Hygiena a požární bezpečnost
+              </div>
+              <div className="rounded-xl border border-zinc-700 bg-zinc-900/70 p-3 text-sm text-zinc-200">
+                Měřitelný výstup a fotodokumentace
+              </div>
+              <div className="rounded-xl border border-zinc-700 bg-zinc-900/70 p-3 text-sm text-zinc-200">
+                Kvalita práce napříč celou ČR
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section
+        id="sluzby"
+        className="relative z-10 border-y border-zinc-800 bg-[#05070f]/95 px-4 py-16 sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto max-w-6xl">
+          <motion.h2
+            variants={revealUp}
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.55 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-3xl font-black uppercase sm:text-4xl md:text-5xl"
+          >
+            Služby Air Tech
+          </motion.h2>
+          <motion.p
+            variants={revealUp}
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.55, delay: 0.08 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="mt-3 max-w-3xl text-sm text-zinc-300 sm:mt-4 sm:text-base"
+          >
+            Každou zakázku řešíme systémově - od vstupní diagnostiky až po
+            finální dokumentaci. Cíl je vždy stejný: bezpečný provoz a čistý
+            vzduch.
+          </motion.p>
+
+          <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 md:mt-12 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
+            {services.map((service, i) => (
+              <motion.article
+                key={service.title}
+                initial={{ opacity: 0, y: 34 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: i * 0.06 }}
+                viewport={{ once: true, amount: 0.35 }}
+                whileHover={{ scale: 1.02, y: -6 }}
+                className="group rounded-2xl border border-zinc-800 bg-zinc-950 p-5 transition hover:border-blue-300/70 hover:shadow-[0_0_24px_rgba(90,160,255,0.2)] sm:rounded-3xl sm:p-6 md:p-7"
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.35, delay: i * 0.07 + 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.08 }}
+                  className="inline-flex rounded-xl border border-blue-200/25 bg-blue-950/30 p-2.5 text-blue-100 transition duration-300 group-hover:border-blue-200/55 group-hover:text-blue-300 group-hover:shadow-[0_0_14px_rgba(120,175,255,0.55)]"
+                >
+                  <service.icon size={34} strokeWidth={1.8} />
+                </motion.div>
+                <h3 className="mt-4 text-xl font-bold sm:text-2xl">{service.title}</h3>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="proc-si-vybrat" className="relative z-10 px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            className="rounded-[1.6rem] border border-zinc-800 bg-zinc-950 p-6 sm:rounded-[2rem] sm:p-8 md:p-12"
+          >
+            <h2 className="text-3xl font-black uppercase sm:text-4xl md:text-5xl">
+              Proč si vybrat Air Tech
+            </h2>
+            <p className="mt-6 text-zinc-300">
+              Neprodáváme sliby. Dodáváme jasný výsledek, který vidíte i cítíte.
+            </p>
+            <ul className="mt-8 space-y-4">
+              {benefits.map((item, i) => (
+                <motion.li
+                  key={item}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  viewport={{ once: true }}
+                  className="flex items-start gap-3 text-lg"
+                >
+                  <span className="mt-1 h-3 w-3 rounded-full bg-blue-300 shadow-[0_0_10px_rgba(90,160,255,0.8)]" />
+                  <span>{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            className="rounded-[1.6rem] border border-blue-300/55 bg-blue-300 p-6 text-black sm:rounded-[2rem] sm:p-8 md:p-12"
+          >
+            <h3 className="text-2xl font-black uppercase sm:text-3xl">Co získáte</h3>
+            <div className="mt-6 space-y-4 text-base font-semibold sm:mt-7 sm:space-y-5 sm:text-lg">
+              <p>Vyšší účinnost VZT systému.</p>
+              <p>Nižší riziko požáru a hygienických problémů.</p>
+              <p>Delší životnost technologie a nižší náklady.</p>
+              <p>Jasný plán pravidelné údržby pro váš provoz.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="realizace" className="relative z-10 bg-[#040913]/95 px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl font-black uppercase sm:text-4xl md:text-5xl"
+          >
+            Realizace před / po
+          </motion.h2>
+          <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6">
+            <motion.article
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-zinc-800 bg-black p-4 sm:rounded-3xl sm:p-5"
+            >
+              <h3 className="mb-4 text-xl font-bold">Průmyslové potrubí</h3>
+              <div className="relative overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900">
+                <Image
+                  src="/realizace-pred-po.png"
+                  alt="Realizace před a po - Průmyslové potrubí"
+                  width={1024}
+                  height={384}
+                  className="h-auto w-full object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+                <div className="absolute left-3 top-3 rounded-full border border-red-400/60 bg-black/55 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-red-300 sm:text-xs">
+                  Před
+                </div>
+                <div className="absolute right-3 top-3 rounded-full border border-blue-300/70 bg-black/55 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-200 sm:text-xs">
+                  Po
+                </div>
+              </div>
+            </motion.article>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative z-10 px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl font-black uppercase sm:text-4xl md:text-5xl"
+          >
+            Reference zákazníků
+          </motion.h2>
+          <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 md:grid-cols-3">
+            {references.map((ref, i) => (
+              <motion.article
+                key={ref.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 }}
+                viewport={{ once: true }}
+                className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 sm:rounded-3xl sm:p-7"
+              >
+                <p className="text-zinc-200">&quot;{ref.quote}&quot;</p>
+                <p className="mt-6 font-bold text-blue-300">{ref.name}</p>
+                <p className="text-sm text-zinc-400">{ref.company}</p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="cenik" className="relative z-10 bg-[#050913]/95 px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-3xl font-black uppercase sm:text-4xl md:text-5xl"
+          >
+            ČISTÝ VZDUCH
+            <span className="block text-blue-300">za nejlepší ceny</span>
+          </motion.h2>
+          <p className="mt-4 text-sm text-zinc-300 sm:text-base">
+            Orientační ceny čištění vzduchotechniky podle velikosti provozu.
+            Uvedené ceny jsou bez DPH.
+          </p>
+
+          <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-6 md:grid-cols-3">
+            <motion.article
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-zinc-500/50 bg-zinc-200 p-6 text-black sm:rounded-3xl"
+            >
+              <div className="flex items-center gap-2 text-zinc-700">
+                <Store size={18} strokeWidth={1.9} />
+                <p className="text-xs font-bold uppercase tracking-[0.16em]">
+                  Malé provozy
+                </p>
+              </div>
+              <p className="mt-4 text-3xl font-black text-black">od 8 000 Kč</p>
+              <p className="mt-2 text-sm text-zinc-700">bez DPH</p>
+            </motion.article>
+
+            <motion.article
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.06 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-zinc-700/70 bg-zinc-700 p-6 text-white sm:rounded-3xl"
+            >
+              <div className="flex items-center gap-2">
+                <Building2 size={18} strokeWidth={1.9} />
+                <p className="text-xs font-bold uppercase tracking-[0.16em]">
+                  Střední provozy
+                </p>
+              </div>
+              <p className="mt-4 text-3xl font-black">od 10 000 Kč</p>
+              <p className="mt-2 text-sm text-zinc-200">bez DPH</p>
+            </motion.article>
+
+            <motion.article
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 }}
+              viewport={{ once: true }}
+              className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 text-white sm:rounded-3xl"
+            >
+              <div className="flex items-center gap-2 text-zinc-300">
+                <Factory size={18} strokeWidth={1.9} />
+                <p className="text-xs font-bold uppercase tracking-[0.16em]">
+                  Velké provozy
+                </p>
+              </div>
+              <p className="mt-4 text-3xl font-black text-white">od 15 000 Kč</p>
+              <p className="mt-2 text-sm text-zinc-400">bez DPH</p>
+            </motion.article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="kontakt"
+        className="relative z-10 border-t border-zinc-800 bg-[#070b14]/95 px-4 py-16 sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_1.15fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-black uppercase sm:text-4xl md:text-6xl">
+              Kontaktujte Air Tech
+            </h2>
+            <p className="mt-6 max-w-md text-zinc-300">
+              Potřebujete vyčistit vzduchotechniku? Napište nám a my připravíme
+              rychlou cenovou nabídku na míru.
+            </p>
+            <div className="mt-8 space-y-2 text-zinc-200">
+              <p>Telefon: +420 123 456 789</p>
+              <p>E-mail: info@draxon.cz</p>
+              <p>Působnost: Praha a okolí, po domluvě kdekoliv po celé ČR</p>
+            </div>
+          </motion.div>
+
+          <motion.form
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="rounded-[1.6rem] border border-blue-300/45 bg-black p-5 sm:rounded-[2rem] sm:p-7 md:p-10"
+          >
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block text-sm text-zinc-300">Jméno</span>
+                <input
+                  type="text"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white outline-none ring-blue-300/80 transition focus:ring-2"
+                  placeholder="Vaše jméno"
+                  required
+                />
+              </label>
+              <label className="block">
+                <span className="mb-2 block text-sm text-zinc-300">Telefon</span>
+                <input
+                  type="tel"
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white outline-none ring-blue-300/80 transition focus:ring-2"
+                  placeholder="+420..."
+                  required
+                />
+              </label>
+            </div>
+            <label className="mt-4 block">
+              <span className="mb-2 block text-sm text-zinc-300">E-mail</span>
+              <input
+                type="email"
+                className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white outline-none ring-blue-300/80 transition focus:ring-2"
+                placeholder="vas@email.cz"
+                required
+              />
+            </label>
+            <label className="mt-4 block">
+              <span className="mb-2 block text-sm text-zinc-300">Zpráva</span>
+              <textarea
+                rows={5}
+                className="w-full resize-none rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 text-white outline-none ring-blue-300/80 transition focus:ring-2"
+                placeholder="Popište váš objekt a požadavek..."
+                required
+              />
+            </label>
+            <button
+              type="submit"
+              className="neon-button mt-6 w-full rounded-full bg-blue-400 px-8 py-4 font-extrabold uppercase text-black transition hover:bg-blue-300"
+            >
+              Odeslat poptávku
+            </button>
+          </motion.form>
+        </div>
+      </section>
+
+      <a
+        href="tel:+420123456789"
+        className="neon-button fixed bottom-3 right-3 z-50 rounded-full border border-blue-200 bg-blue-400 px-4 py-2.5 text-xs font-black uppercase tracking-wide text-black shadow-[0_0_20px_rgba(80,140,255,0.45)] transition hover:scale-105 sm:bottom-5 sm:right-5 sm:px-6 sm:py-3 sm:text-sm"
+      >
+        Zavolat
+      </a>
+
+      <footer className="border-t border-zinc-800 bg-black px-6 py-8 text-center text-sm text-zinc-500">
+        <p>© {new Date().getFullYear()} Air Tech. Všechna práva vyhrazena.</p>
+      </footer>
+    </main>
+  );
+}
