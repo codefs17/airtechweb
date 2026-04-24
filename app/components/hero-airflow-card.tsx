@@ -11,6 +11,13 @@ export default function HeroAirflowCard() {
     { top: "45%", left: "7%", delay: 1.45 },
     { top: "18%", left: "70%", delay: 1.8 },
   ];
+  const techMarks = [
+    { top: "12%", left: "34%" },
+    { top: "22%", left: "64%" },
+    { top: "50%", left: "90%" },
+    { top: "70%", left: "60%" },
+    { top: "82%", left: "26%" },
+  ];
   return (
     <motion.div
       initial={{ opacity: 0, y: 26, scale: 0.96 }}
@@ -62,6 +69,15 @@ export default function HeroAirflowCard() {
       ))}
 
       <div className="relative mx-auto flex h-[350px] w-full items-center justify-center sm:h-[390px]">
+        {techMarks.map((mark) => (
+          <div
+            key={`${mark.top}-${mark.left}`}
+            className="pointer-events-none absolute text-[10px] text-blue-100/35"
+            style={{ top: mark.top, left: mark.left }}
+          >
+            +
+          </div>
+        ))}
         <motion.div
           className="absolute h-[295px] w-[295px] rounded-full border border-blue-200/25"
           animate={{ rotate: 360 }}
@@ -84,15 +100,21 @@ export default function HeroAirflowCard() {
           transition={{ rotate: { duration: 32, repeat: Infinity, ease: "linear" }, scale: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
         />
         <motion.div
+          className="absolute h-[360px] w-[360px] rounded-full border border-blue-100/10"
+          animate={{ rotate: 360, opacity: [0.15, 0.35, 0.15] }}
+          transition={{ rotate: { duration: 46, repeat: Infinity, ease: "linear" }, opacity: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
+        />
+        <motion.div
           className="absolute h-[108px] w-[108px] rounded-full border border-blue-200/30"
           animate={{ scale: [1, 1.16, 1], opacity: [0.28, 0.6, 0.28] }}
           transition={{ duration: 2.7, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="pointer-events-none absolute h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle,rgba(130,190,255,0.16),rgba(130,190,255,0.02),transparent_72%)]" />
+        <div className="pointer-events-none absolute h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,rgba(130,190,255,0.2),rgba(130,190,255,0.04),transparent_74%)] blur-[2px]" />
+        <div className="pointer-events-none absolute h-[230px] w-[230px] rounded-full bg-[radial-gradient(circle,rgba(188,220,255,0.17),transparent_68%)]" />
 
         <motion.svg
           viewBox="0 0 220 220"
-          className="relative z-10 h-[255px] w-[255px] drop-shadow-[0_0_30px_rgba(120,180,255,0.58)]"
+          className="relative z-10 h-[255px] w-[255px] drop-shadow-[0_0_38px_rgba(120,180,255,0.7)]"
           animate={{ rotate: 360 }}
           transition={{ duration: 4.6, repeat: Infinity, ease: "linear" }}
           aria-hidden="true"

@@ -12,6 +12,9 @@ import {
   Flame,
   Store,
   Building2,
+  MapPinned,
+  Clock3,
+  FileCheck2,
   type LucideIcon,
 } from "lucide-react";
 import BackgroundParticles from "./components/background-particles";
@@ -35,13 +38,37 @@ export default function Home() {
     hidden: { opacity: 0, y: 26 },
     visible: { opacity: 1, y: 0 },
   };
-  const services: Array<{ title: string; icon: LucideIcon }> = [
-    { title: "Komplexní čištění vzduchotechniky", icon: Fan },
-    { title: "Odmaštění a sanitace odtahů", icon: Flame },
-    { title: "Kontrola a servis rozvodů", icon: Settings },
-    { title: "Průmyslová inspekce kamerou", icon: Camera },
-    { title: "Dezinfekce systémů HVAC", icon: ShieldCheck },
-    { title: "Pravidelná údržba provozů", icon: RefreshCw },
+  const services: Array<{ title: string; icon: LucideIcon; description: string }> = [
+    {
+      title: "Komplexní čištění vzduchotechniky",
+      icon: Fan,
+      description: "Hloubkové odstranění usazenin pro vyšší výkon a čistší vzduch v celém systému.",
+    },
+    {
+      title: "Odmaštění a sanitace odtahů",
+      icon: Flame,
+      description: "Bezpečné čištění gastro odtahů se snížením požárního rizika a zápachu.",
+    },
+    {
+      title: "Kontrola a servis rozvodů",
+      icon: Settings,
+      description: "Technická kontrola rozvodů včetně návrhu údržby pro stabilní provoz.",
+    },
+    {
+      title: "Průmyslová inspekce kamerou",
+      icon: Camera,
+      description: "Přesná diagnostika stavu potrubí bez zbytečných odstávek výroby.",
+    },
+    {
+      title: "Dezinfekce systémů HVAC",
+      icon: ShieldCheck,
+      description: "Cílená dezinfekce VZT systémů pro hygienicky bezpečné prostředí.",
+    },
+    {
+      title: "Pravidelná údržba provozů",
+      icon: RefreshCw,
+      description: "Servisní plán na míru, který drží technologii dlouhodobě ve špičkové kondici.",
+    },
   ];
 
   const benefits = [
@@ -81,7 +108,7 @@ export default function Home() {
     };
 
   return (
-    <main className="relative overflow-hidden bg-black pb-24 text-white sm:pb-28 md:pb-0">
+    <main className="relative overflow-hidden bg-black pb-28 text-white sm:pb-32 md:pb-24">
       <BackgroundParticles />
       <motion.div
         initial={{ opacity: 0, x: -10 }}
@@ -159,25 +186,41 @@ export default function Home() {
               variants={heroStagger}
               initial="hidden"
               animate="visible"
-              className="mt-10 text-[2.15rem] font-black uppercase leading-[0.93] tracking-tight text-white sm:mt-14 sm:text-6xl md:text-[5.4rem]"
+              className="mt-10 text-[2.05rem] font-black uppercase leading-[0.9] tracking-tight text-white sm:mt-14 sm:text-6xl md:text-[5.2rem]"
             >
               <motion.span variants={lineVariant} transition={{ duration: 0.45 }} className="block">
-                ČIŠTĚNÍ VZDUCHOTECHNIKY
+                ČISTÝ VZDUCH PRO VÁŠ PROVOZ
               </motion.span>
               <motion.span
                 variants={lineVariant}
                 transition={{ duration: 0.45 }}
                 className="block whitespace-nowrap text-[0.72em] text-blue-300 drop-shadow-[0_0_16px_rgba(125,175,255,0.45)]"
               >
-                PRO FIRMY A PROVOZY
+                BEZ RIZIKA A ZBYTEČNÝCH ODSTÁVEK
               </motion.span>
             </motion.h1>
 
             <p className="mt-6 max-w-4xl text-base text-zinc-300 sm:text-lg md:text-xl md:leading-[1.4]">
-              Profesionální čištění VZT potrubí, gastro odtahů a
-              vzduchotechnických systémů pro restaurace, firmy a komerční
-              provozy po celé ČR.
+              Profesionální čištění VZT potrubí, gastro odtahů a vzduchotechniky
+              pro firmy, výrobní haly i komerční provozy s důrazem na výkon,
+              hygienu a provozní bezpečnost.
             </p>
+
+            <div className="mt-6 grid max-w-3xl gap-2.5 sm:grid-cols-3">
+              {[
+                { icon: MapPinned, text: "Po celé ČR" },
+                { icon: Clock3, text: "Rychlá domluva" },
+                { icon: FileCheck2, text: "Dokumentace po realizaci" },
+              ].map((point) => (
+                <div
+                  key={point.text}
+                  className="flex items-center gap-2 rounded-full border border-blue-300/35 bg-blue-950/25 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-blue-100 sm:text-sm"
+                >
+                  <point.icon size={16} strokeWidth={2} />
+                  <span>{point.text}</span>
+                </div>
+              ))}
+            </div>
 
             <div className="mt-9 flex max-w-lg flex-col gap-3 sm:mt-11 sm:max-w-none sm:flex-row sm:gap-5">
               <a
@@ -188,11 +231,10 @@ export default function Home() {
                 Nezávazná poptávka
               </a>
               <a
-                href="#realizace"
-                onClick={handleSmoothScroll("realizace")}
+                href="tel:+420123456789"
                 className="neon-button w-full rounded-full border border-blue-300/70 px-7 py-4 text-center text-lg font-extrabold text-blue-300 transition hover:bg-blue-300 hover:text-black sm:w-auto sm:px-10 sm:py-4.5"
               >
-                Zobrazit realizace
+                Zavolat
               </a>
             </div>
           </div>
@@ -303,6 +345,7 @@ export default function Home() {
                   <service.icon size={34} strokeWidth={1.8} />
                 </motion.div>
                 <h3 className="mt-4 text-xl font-bold sm:text-2xl">{service.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-[0.95rem]">{service.description}</p>
               </motion.article>
             ))}
           </div>
@@ -510,12 +553,17 @@ export default function Home() {
               Kontaktujte Air Tech
             </h2>
             <p className="mt-6 max-w-md text-zinc-300">
-              Potřebujete vyčistit vzduchotechniku? Napište nám a my připravíme
-              rychlou cenovou nabídku na míru.
+              Chcete rychlou a spolehlivou nabídku pro váš provoz? Ozvěte se nám
+              ještě dnes - navrhneme ideální postup, termín i rozsah realizace.
             </p>
-            <div className="mt-8 space-y-2 text-zinc-200">
-              <p>Telefon: +420 123 456 789</p>
-              <p>E-mail: info@draxon.cz</p>
+            <a
+              href="tel:+420123456789"
+              className="mt-8 inline-flex items-center rounded-2xl border border-blue-300/70 bg-blue-400/10 px-5 py-3 text-2xl font-black text-blue-200 shadow-[0_0_24px_rgba(95,146,255,0.25)] transition hover:bg-blue-400/20"
+            >
+              +420 123 456 789
+            </a>
+            <div className="mt-6 space-y-2 text-zinc-200">
+              <p>E-mail: info@airtech.cz</p>
               <p>Působnost: Praha a okolí, po domluvě kdekoliv po celé ČR</p>
             </div>
           </motion.div>
